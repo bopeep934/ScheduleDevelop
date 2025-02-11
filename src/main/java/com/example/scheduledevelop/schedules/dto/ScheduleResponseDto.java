@@ -1,4 +1,4 @@
-package com.example.scheduledevelop.dto;
+package com.example.scheduledevelop.schedules.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class ScheduleResponseDto {
     private final LocalDateTime modifiedAt;
 
     public ScheduleResponseDto(Long id, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime modifiedAt){
-
+//일정 응답 객체
         this.id=id;
         this.username=username;
         this.title=title;
