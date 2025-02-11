@@ -18,8 +18,8 @@ public class UserService {//유저service
     private final UserRepository userRepository;
 
     @Transactional
-    public UserResponseDto save(UserRequestDto dto) {//저장
-        User user= new User(dto.getUsername(), dto.getEmail());
+    public UserResponseDto signUp(UserRequestDto dto) {//저장
+        User user= new User(dto.getUsername(), dto.getPassword(), dto.getEmail());
         User saveUser = userRepository.save(user);
 
         return new UserResponseDto(saveUser.getId(),

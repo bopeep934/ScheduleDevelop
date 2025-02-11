@@ -17,8 +17,8 @@ public class UserController {//유저 controller. 사용자로부터 정보를 �
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> save(@RequestBody UserRequestDto dto){//저장
-        return ResponseEntity.ok(userService.save(dto));
+    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto dto){//저장
+        return ResponseEntity.ok(userService.signUp(dto));
     }
 
     @GetMapping
