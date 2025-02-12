@@ -1,10 +1,16 @@
 package com.example.scheduledevelop.schedules.controller;
 
+import com.example.scheduledevelop.schedules.dto.PageResponseDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleRequestDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleResponseDto;
+import com.example.scheduledevelop.schedules.entity.Schedule;
 import com.example.scheduledevelop.schedules.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -50,6 +56,13 @@ public class ScheduleController {//일정 controller. 일정정보를 받아 ser
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {//특정 일정 삭제
         scheduleService.deleteById(id);
+    }
+
+    @GetMapping("/pageInfo")
+    public ResponseEntity<Page<PageResponseDto>> pageInfo(@RequestParam (defaultValue = "1") int page,
+                                                          @RequestParam(defaultValue = "10") int size){
+        Pageable pageable= PageRequest.of(page-1,size);
+        return ResponseEntity.ok(scheduleService.getPage(pageable));
     }
 
 }

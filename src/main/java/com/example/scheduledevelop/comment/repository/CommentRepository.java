@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
     List<Comment> findBySchedule(Schedule schedule);
+
+    Long countByScheduleId(Long scheduleId);
 }

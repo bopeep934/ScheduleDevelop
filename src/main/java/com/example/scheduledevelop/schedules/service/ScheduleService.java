@@ -1,5 +1,7 @@
 package com.example.scheduledevelop.schedules.service;
 
+import com.example.scheduledevelop.comment.repository.CommentRepository;
+import com.example.scheduledevelop.schedules.dto.PageResponseDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleRequestDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleResponseDto;
 import com.example.scheduledevelop.schedules.entity.Schedule;
@@ -7,6 +9,8 @@ import com.example.scheduledevelop.schedules.repository.ScheduleRepository;
 import com.example.scheduledevelop.users.entity.User;
 import com.example.scheduledevelop.users.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +23,8 @@ public class ScheduleService {//일정 service. controller에게 요청 객체�
 
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+
 
     @Transactional
     public ScheduleResponseDto save(ScheduleRequestDto dto){//일정 저장
@@ -89,4 +95,21 @@ public class ScheduleService {//일정 service. controller에게 요청 객체�
         }
         scheduleRepository.deleteById(id);
     }
-}
+
+    public Page<PageResponseDto> getPage(Pageable pageable) {
+        Page<Schedule> pageS = scheduleRepository.findAllByOrderByModifiedAtDesc (pageable);
+       // Long commentIndex= commentRepository.findByScheduleId(schedule.getId());
+
+         Page<PageResponseDto> pages= pageS.map(schedule ->
+                new PageResponseDto(schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContents(),
+                        commentRepository.countByScheduleId(schedule.getId()),
+                        schedule.getUser().getUsername(),
+                        schedule.getCreatedAt(),
+                        schedule.getModifiedAt()));
+
+        return pages;
+    }
+    }
+
