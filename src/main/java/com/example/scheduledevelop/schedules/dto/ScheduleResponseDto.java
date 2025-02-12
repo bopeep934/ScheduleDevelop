@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-public class ScheduleResponseDto {
+public class ScheduleResponseDto {//일정 응답 객체
 
     private final Long id;
     private final String username;
@@ -16,7 +16,7 @@ public class ScheduleResponseDto {
     private final LocalDateTime modifiedAt;
 
     public ScheduleResponseDto(Long id, String username, String title, String contents, LocalDateTime createdAt, LocalDateTime modifiedAt){
-//일정 응답 객체
+
         this.id=id;
         this.username=username;
         this.title=title;

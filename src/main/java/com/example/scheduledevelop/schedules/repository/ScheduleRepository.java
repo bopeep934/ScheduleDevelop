@@ -1,8 +1,6 @@
 package com.example.scheduledevelop.schedules.repository;
 
-import com.example.scheduledevelop.comment.entity.Comment;
 import com.example.scheduledevelop.schedules.entity.Schedule;
-import com.example.scheduledevelop.users.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +17,4 @@ public interface ScheduleRepository  extends JpaRepository<Schedule, Long> {
     }
 
     Page<Schedule> findAllByOrderByModifiedAtDesc (Pageable pageable);
-}//일정 repository. 데이터 처리
+}

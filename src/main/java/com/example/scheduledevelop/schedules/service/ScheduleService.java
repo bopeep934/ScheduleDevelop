@@ -1,6 +1,6 @@
 package com.example.scheduledevelop.schedules.service;
 
-import com.example.scheduledevelop.comment.repository.CommentRepository;
+import com.example.scheduledevelop.comments.repository.CommentRepository;
 import com.example.scheduledevelop.schedules.dto.PageResponseDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleRequestDto;
 import com.example.scheduledevelop.schedules.dto.ScheduleResponseDto;

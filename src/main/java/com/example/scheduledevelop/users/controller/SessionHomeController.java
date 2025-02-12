@@ -17,7 +17,7 @@ public class SessionHomeController {
 
     private final UserService userService;
 
-    @GetMapping("/session-home")
+    @GetMapping("/session-home")//로그인 성공여부 확인 클래스
     public ResponseEntity<String> home(
             HttpServletRequest request
     ) {
@@ -26,13 +26,13 @@ public class SessionHomeController {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
-            return ResponseEntity.ok("login");
+            return ResponseEntity.ok("로그인 하세요");
         }
 
         UserResponseDto loginUser = (UserResponseDto) session.getAttribute(Const.LOGIN_USER);
 
         if (loginUser == null) {
-            return ResponseEntity.ok("login");
+            return ResponseEntity.ok("로그인 하세요");
         }
 
         String result = loginUser.getUsername() + "님 환영합니다.";

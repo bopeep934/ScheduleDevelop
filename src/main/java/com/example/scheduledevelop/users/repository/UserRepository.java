@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserById(Long Id);
 
-    //   Optional<User> findByEmailAndPassword(String username, String password);
+    //Optional<User> findByEmailAndPassword(String username, String password);
 
     default User findUserByIdOrElseThrow(Long Id) {
         return findUserById(Id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exit userId " + Id));
