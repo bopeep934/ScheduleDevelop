@@ -1,5 +1,6 @@
 package com.example.scheduledevelop.users.service;
 
+import com.example.scheduledevelop.users.config.PasswordEncoder;
 import com.example.scheduledevelop.users.dto.LoginResponseDto;
 import com.example.scheduledevelop.users.dto.UserRequestDto;
 import com.example.scheduledevelop.users.dto.UserResponseDto;
@@ -23,7 +24,11 @@ public class UserService {//유저service
 
     @Transactional
     public UserResponseDto signUp(UserRequestDto dto) {//저장
-        User user = new User(dto.getUsername(), dto.getPassword(), dto.getEmail());
+
+        String passwordEncoder = pwdEncoder(dto.getPassword());//패스워드 암호화 먼저 하기
+
+        User user = new User(dto.getUsername(), passwordEncoder, dto.getEmail());
+
         User saveUser = userRepository.save(user);
 
         return new UserResponseDto(saveUser.getId(),
@@ -83,14 +88,34 @@ public class UserService {//유저service
         userRepository.deleteById(id);
     }
 
-    public LoginResponseDto login(String email, String password) {
-        User user = userRepository.findByEmailAndPassword(email, password);
-        Optional<User> ou = Optional.ofNullable(user);
-        if(ou.isEmpty()){
-           return null;
+    public LoginResponseDto login(String email, String password) {//로그인
+
+        User user = userRepository.findByEmail(email);//1.이메일로 유저 정보 찾기
+        Optional<User> ou = Optional.ofNullable(user);//2.유저를 optional로 감싸기
+        LoginResponseDto loginDto = null;
+
+       if(!ou.isEmpty()&&pwdMatches(password, user.getPassword())) {//3.객체가 비지 않았고, 비밀번호가 DB랑 맞다면,
+            loginDto= new LoginResponseDto(user.getId());//4.응답DTO 생성
         }
-        return new LoginResponseDto(user.getId());
+
+       return loginDto;
+    }
+
+    public String pwdEncoder(String rawPassword) {//패스워드 암호화 메소드
+
+        PasswordEncoder pe = new PasswordEncoder();
+
+        return pe.encode(rawPassword);
 
     }
+
+    public boolean pwdMatches(String rawPassword, String encPassword) {//암호화된 패스워드와 입력 패스워드 비교
+
+        PasswordEncoder pe = new PasswordEncoder();
+
+        return pe.matches(rawPassword, encPassword);
+
+    }
+
 }
 
