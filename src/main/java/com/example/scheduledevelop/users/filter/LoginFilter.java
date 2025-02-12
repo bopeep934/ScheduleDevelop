@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LoginFilter implements Filter {
     //로그인이 된 상태인지 확인하는 필터.
 
-    private static final String[] WHITE_LIST = {"/", "/login", "/users/signup"};
+    private static final String[] WHITE_LIST = {"/", "/login", "/users/signup", "/schedules"};
     //회원가입과 로그인, 로그아웃 + 기존 기능들은 인증을 하지 않는다.
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.scheduledevelop.schedules.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class ScheduleRequestDto {//일정 요청 객체
     @Size(min=1,max=10, message="10자 내외로 입력해주세요.")
     private final String title;
 
-    @NotBlank(message="사용자 아이디를 입력해주세요.")
+    @NotNull
     private final Long userId;
 
     @NotBlank(message="내용을 입력해주세요.")
