@@ -20,9 +20,9 @@ public class SessionHomeController {
     @GetMapping("/session-home")
     public ResponseEntity<String> home(
             HttpServletRequest request
-            //          Model model
     ) {
         System.out.println("세션 테스트");
+
         HttpSession session = request.getSession(false);
 
         if (session == null) {
@@ -36,8 +36,6 @@ public class SessionHomeController {
         }
 
         String result = loginUser.getUsername() + "님 환영합니다.";
-
-        //       model.addAttribute("loginUser", loginUser);
 
         return ResponseEntity.ok(result);
     }

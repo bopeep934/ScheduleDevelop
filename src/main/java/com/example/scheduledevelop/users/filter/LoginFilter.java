@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LoginFilter implements Filter {
     //로그인이 된 상태인지 확인하는 필터.
 
-    private static final String[] WHITE_LIST = {"/", "/login", "/users/signup", "/schedules"};
+    private static final String[] WHITE_LIST = {"/", "/login", "/users/signup"};
     //회원가입과 로그인, 로그아웃 + 기존 기능들은 인증을 하지 않는다.
 
     @Override
@@ -28,6 +28,7 @@ public class LoginFilter implements Filter {
     ) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+
         String requestURI = httpRequest.getRequestURI();
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -38,9 +39,9 @@ public class LoginFilter implements Filter {
 
             HttpSession session = httpRequest.getSession(false);//session을 가져온다. false: 기존 세션이 존재하지 않다면 null을 입력.
 
-            log.info("session.getId()={}", session.getId());
-
-            if (session == null || session.getAttribute("세션값") == null) {
+            log.info("session.getId()={}", session);
+// || session.getAttribute("세션값") == null
+            if (session == null) {
                 throw new RuntimeException("로그인 해주세요.");
             }
         }

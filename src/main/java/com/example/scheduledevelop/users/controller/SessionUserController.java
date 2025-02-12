@@ -31,6 +31,7 @@ public class SessionUserController {
                                         HttpServletRequest request) {
 
         LoginResponseDto responseDto = userService.login(dto.getEmail(), dto.getPassword());
+
         Optional<LoginResponseDto> value = Optional.ofNullable(responseDto);
 
         if (!value.isPresent()) {//null값이면 로그인 실패 메세지를 띄우기
@@ -38,9 +39,12 @@ public class SessionUserController {
                     .status(HttpStatus.UNAUTHORIZED)
                     .body("로그인에 실패했습니다.");
         } else {//로그인 성공
+
             Long userId = responseDto.getUserId();
 
             HttpSession session = request.getSession();//세션 생성
+
+            //세션값 메소드 따로 생성:setAttribte();
 
             UserResponseDto loginUser = userService.findById(userId);
 
@@ -53,7 +57,9 @@ public class SessionUserController {
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {//로그아웃
+
         HttpSession session = request.getSession(false);
+
         if (session != null) {//세션이 있다면 종료하기
             session.invalidate();
         }
