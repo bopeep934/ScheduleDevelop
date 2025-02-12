@@ -7,12 +7,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository <User,Long>{
+public interface UserRepository extends JpaRepository<User, Long> {
 //유저repository
 
     Optional<User> findUserById(Long Id);
 
-    default User findUserByIdOrElseThrow(Long Id){
-        return findUserById(Id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exit userId "+ Id ));
+ //   Optional<User> findByEmailAndPassword(String username, String password);
+
+    default User findUserByIdOrElseThrow(Long Id) {
+        return findUserById(Id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exit userId " + Id));
     }
+
+    User findByEmailAndPassword(String email, String password);
 }

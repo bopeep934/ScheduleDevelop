@@ -3,8 +3,10 @@ package com.example.scheduledevelop.users.controller;
 import com.example.scheduledevelop.users.dto.UserRequestDto;
 import com.example.scheduledevelop.users.dto.UserResponseDto;
 import com.example.scheduledevelop.users.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,14 @@ public class UserController {//유저 controller. 사용자로부터 정보를 �
 
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto dto){//저장
+    @PostMapping("/signup")
+    public Object signUp(@Valid @RequestBody UserRequestDto dto,
+    BindingResult bindingResult){//저장
+        if (bindingResult.hasErrors()) {
+            //   log.info("validation errors={}", bindingResult);
+            // Field, Object Error 모두 JSON으로 반환
+            return bindingResult.getAllErrors();
+        }
         return ResponseEntity.ok(userService.signUp(dto));
     }
 
